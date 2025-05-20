@@ -1,0 +1,28 @@
+{
+    "name": "${policy_name}",
+    "description": "This is a specific CVEs security policy",
+    "type": "security",
+    "rules": [{
+        "name": "some_rule",
+        "criteria": {
+            "malicious_package": false,
+            "fix_version_dependant": false,
+            "min_severity": "high"
+        },
+        "actions": {
+            "mails": [],
+            "webhooks": [],
+            "fail_build": false,
+            "block_release_bundle_distribution": false,
+            "block_release_bundle_promotion": false,
+            "notify_deployer": false,
+            "notify_watch_recipients": false,
+            "create_ticket_enabled": false,
+            "block_download": {
+                "active": false,
+                "unscanned": false
+            }
+        },
+        "priority": 1
+    }]
+} 

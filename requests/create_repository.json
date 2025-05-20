@@ -1,0 +1,7 @@
+{
+    "key": "${repo_name}",
+    "projectKey": "",
+    "packageType": "docker",
+    "rclass": "local",
+    "xrayIndex": true
+} 

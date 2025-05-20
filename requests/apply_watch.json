@@ -1,0 +1,7 @@
+{
+    "watch_names": ["${watch_name}"],
+    "date_range": {
+        "start_date": "2025-04-07T10:25:00+02:00",
+        "end_date": "2025-07-07T10:30:00+02:00"
+    }
+} 
