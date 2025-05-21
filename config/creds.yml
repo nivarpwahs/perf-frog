@@ -1,1 +1,2 @@
-auth : abcd
+auth_token: "dGVzdHVzZXJwZXJmOk11bWJhaUAxMjM="
+content-type: "application/json"
