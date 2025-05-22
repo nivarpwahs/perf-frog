@@ -1,4 +1,4 @@
-base_url: "trial9zttz8.jfrog.io"
+base_url: "abc.jfrog.io"
 endpoints:
   create_repository:
     path: "/artifactory/api/repositories"

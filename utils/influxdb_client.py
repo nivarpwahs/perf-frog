@@ -25,48 +25,44 @@ class EventInfluxHandlers:
     @staticmethod
     @events.request.add_listener
     def request_handler(request_type, name, response_time, response_length, response, exception, **kwargs):
-        if exception:
-            # Handle failure
-            failure_temp = \
-                '[{"measurement": "%s",\
-                "tags": {\
-                    "hostname": "%s",\
-                    "requestName": "%s",\
-                    "requestType": "%s",\
-                    "status": "%s",\
-                    "exception": "%s"\
-                },\
-                "time": "%s",\
-                "fields": {\
-                    "responseTime": "%s",\
-                    "responseLength": "%s"\
-                }\
-             }]'
-
-            json_string = failure_temp % (EventInfluxHandlers.table_name, EventInfluxHandlers.hostname, name, request_type,
-                                          "FAIL", str(exception), datetime.datetime.now(tz=pytz.UTC),
-                                          response_time, response_length)
-        else:
-            # Handle success
-            success_temp = \
-                '[{"measurement": "%s",\
-                "tags": {\
-                    "hostname": "%s",\
-                    "requestName": "%s",\
-                    "requestType": "%s",\
-                    "status": "%s"\
-                },\
-                "time": "%s",\
-                "fields": {\
-                    "responseTime": "%s",\
-                    "responseLength": "%s"\
-                }\
-             }]'
-
-            json_string = success_temp % (EventInfluxHandlers.table_name, EventInfluxHandlers.hostname, name, request_type,
-                                          "PASS", datetime.datetime.now(tz=pytz.UTC), response_time, response_length)
-        
-        EventInfluxHandlers.influxDbClient.write_points(json.loads(json_string))
+        try:
+            if exception:
+                # Handle failure
+                failure_temp = {
+                    "measurement": EventInfluxHandlers.table_name,
+                    "tags": {
+                        "hostname": EventInfluxHandlers.hostname,
+                        "requestName": name,
+                        "requestType": request_type,
+                        "status": "FAIL",
+                        "exception": str(exception).replace('"', '\\"')
+                    },
+                    "time": datetime.datetime.now(tz=pytz.UTC).isoformat(),
+                    "fields": {
+                        "responseTime": response_time,
+                        "responseLength": response_length
+                    }
+                }
+                EventInfluxHandlers.influxDbClient.write_points([failure_temp])
+            else:
+                # Handle success
+                success_temp = {
+                    "measurement": EventInfluxHandlers.table_name,
+                    "tags": {
+                        "hostname": EventInfluxHandlers.hostname,
+                        "requestName": name,
+                        "requestType": request_type,
+                        "status": "PASS"
+                    },
+                    "time": datetime.datetime.now(tz=pytz.UTC).isoformat(),
+                    "fields": {
+                        "responseTime": response_time,
+                        "responseLength": response_length
+                    }
+                }
+                EventInfluxHandlers.influxDbClient.write_points([success_temp])
+        except Exception as e:
+            Logger.log_message(f"Error writing to InfluxDB: {str(e)}")
 
 
 
