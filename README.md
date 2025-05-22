@@ -2,6 +2,11 @@
 
 This project is a scalable, modular, and distributed performance testing framework using Locust. It is designed to simulate enterprise level application and provides robust analytics through InfluxDB and Grafana integration.
 
+## Architecture
+
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/9dba6096-a2f7-4c06-8adf-84d3f7f755b9" />
+
+
 
 ## Steps To Setup
 
@@ -9,7 +14,7 @@ This project is a scalable, modular, and distributed performance testing framewo
 2. Install Docker Desktop https://www.docker.com/products/docker-desktop/
 3. Install Dependencies required `pip3 install <dependencies>` list of all the dependencies are present in the requirement.txt file. Alternatively one can execute the requirement.txt by running pip3 install -r requirement.txt
 4. Start the docker Desktop
-5. On Terminal perform the following steps to start influxdb and grafana
+5. On Terminal perform the following steps to start influxdb and grafana execute 
 docker run -d \                                          
   --name influxdb \
   --network monitoring \
@@ -35,6 +40,7 @@ docker run -d \
 2. Once the test data is setup there are 2 configs master_config.yml and slave_config.yml. This is used for distributed execution. Master delegates the execution tasks to workers. Read the config and change as per the load needs.
 3. open 3 terminal on the project root, on one terminal execute master config `locust -f load_test.py --config config/master_config.yml` and on other 2 terminal execute the slave config `locust -f load_test.py --config config/slave_config.yml` 
 4. Once both the workers are up and running the load generation will start, influxDB will get the dump data and can be visualised in Grafana for the metrics.
+
 
      
 
