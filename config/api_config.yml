@@ -1,0 +1,23 @@
+base_url: "https://<yourenvurl>.jfrog.io"
+endpoints:
+  create_repository:
+    path: "/artifactory/api/repositories"
+    method: "PUT"
+  check_repository:
+    path: "/artifactory/api/repositories"
+    method: "GET"
+  create_policy:
+    path: "/xray/api/v2/policies"
+    method: "POST"
+  create_watch:
+    path: "/xray/api/v2/watches"
+    method: "POST"
+  apply_watch:
+    path: "/xray/api/v1/applyWatch"
+    method: "POST"
+  check_scan_status:
+    path: "/xray/api/v1/artifact/status"
+    method: "POST"
+  verify_violations:
+    path: "/xray/api/v1/violations"
+    method: "POST" 

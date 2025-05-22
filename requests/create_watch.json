@@ -1,0 +1,22 @@
+{
+    "general_data": {
+        "name": "${watch_name}",
+        "description": "This is an example watch #1",
+        "active": true
+    },
+    "project_resources": {
+        "resources": [{
+            "type": "repository",
+            "bin_mgr_id": "default",
+            "name": "${repo_name}",
+            "filters": [{
+                "type": "regex",
+                "value": ".*"
+            }]
+        }]
+    },
+    "assigned_policies": [{
+        "name": "${policy_name}",
+        "type": "security"
+    }]
+} 

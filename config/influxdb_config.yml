@@ -1,0 +1,9 @@
+host: localhost
+port: 8086
+org: perf_frog
+bucket: jfrog_metrics
+token: "random_token_123456789"
+measurement: jfrog_api_metrics
+tags:
+  environment: "test"
+  test_type: "load_test" 

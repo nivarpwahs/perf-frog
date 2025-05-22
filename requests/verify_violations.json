@@ -1,0 +1,19 @@
+{
+    "filters": {
+        "watch_name": "${watch_name}",
+        "violation_type": "Security",
+        "min_severity": "High",
+        "resources": {
+            "artifacts": [{
+                "repo": "${repo_name}",
+                "path": "test01/test01/manifest.json"
+            }]
+        }
+    },
+    "pagination": {
+        "order_by": "created",
+        "direction": "asc",
+        "limit": 100,
+        "offset": 1
+    }
+} 

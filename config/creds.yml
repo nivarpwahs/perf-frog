@@ -1,0 +1,2 @@
+auth_token: "<base64 encoded auth <username:password>"
+content-type: "application/json"
