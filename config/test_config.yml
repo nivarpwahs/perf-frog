@@ -1,9 +1,0 @@
-locustfile: load_test.py
-host: https://trial9zttz8.jfrog.io
-users: 10
-spawn_rate: 5
-headless: true
-run_time: 15s
-logfile: run.log
-test_data:
-  csv_path: "data/test_data.csv"

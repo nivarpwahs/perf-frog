@@ -1,9 +1,9 @@
 locustfile = load_test.py
-host =  https://trial9zttz8.jfrog.io
+host =  https://<your env url>.jfrog.io
 master = true
 expect-workers = 2
-users = 3
-spawn-rate = 3
+users = 200
+spawn-rate = 5
 headless = true
-run-time = 2m
+run-time = 10m
 logfile = run.log
