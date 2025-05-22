@@ -3,14 +3,13 @@ import enum
 
 
 class LogType(enum.Enum):
-   INFO = 1
-   DEBUG = 2
-   ERROR = 3
-   CRITICAL = 4
+    INFO = 1
+    DEBUG = 2
+    ERROR = 3
+    CRITICAL = 4
 
 
 class Logger:
-
     log_obj = None
 
     @staticmethod

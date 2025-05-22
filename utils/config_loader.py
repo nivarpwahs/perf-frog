@@ -1,12 +1,13 @@
 import yaml
 import os
+from utils.log_helper import Logger
 
-_config_cache = None
+config_cache = None
 
 def load_cred_config(config_path=None):
-    global _config_cache
-    if _config_cache is not None:
-        return _config_cache
+    global config_cache
+    if config_cache is not None:
+        return config_cache
 
     if config_path is None:
         # Use absolute path based on current working directory
@@ -16,5 +17,14 @@ def load_cred_config(config_path=None):
         raise FileNotFoundError(f"Config file not found: {config_path}")
 
     with open(config_path, "r") as f:
-        _config_cache = yaml.safe_load(f)
-        return _config_cache
+        config_cache = yaml.safe_load(f)
+        return config_cache
+
+def load_config(config_file):
+    try:
+        config_path = os.path.join(os.getcwd(), 'config', config_file)
+        with open(config_path, 'r') as f:
+            return yaml.safe_load(f)
+    except Exception as e:
+        Logger.log_message(f"Error loading config {config_file}: {str(e)}")
+        return {}

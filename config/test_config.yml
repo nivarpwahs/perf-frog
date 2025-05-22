@@ -1,5 +1,5 @@
 locustfile: load_test.py
-host: abc.jfrog.io
+host: https://trial9zttz8.jfrog.io
 users: 10
 spawn_rate: 5
 headless: true

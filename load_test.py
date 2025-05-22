@@ -11,46 +11,32 @@ from tasks.jfrog_tasks import JfrogOperations
 
 @events.init.add_listener
 def on_test_start(environment, **kwargs):
-    DataLoader.load_data()  # Load data only once at the start
+    DataLoader.load_data()
     EventInfluxHandlers.init_influx_client()
-    Logger.log_message("--------Initiating Tests---------")
 
 @events.quitting.add_listener
 def on_test_stop(environment, **kwargs):
-    Logger.log_message("........ Load Test Completed ........")
+    pass
 
 class LoadTestTask(HttpUser):
-    host = "abc.jfrog.io"  # This will be overridden by command line --host parameter
-    wait_time = between(1, 2)  # Wait between 1 and 2 seconds between tasks
+    host = "abc.jfrog.io"
+    wait_time = between(1, 2)
 
     def on_start(self):
-        """Initialize when user starts"""
-        Logger.log_message(f"Starting user with host: {self.host}")
+        pass
 
     @task
     def execute_operations(self):
-        """Execute all JFrog operations in sequence"""
-        while True:  # Continue until no more data is available
+        while True:
             try:
-                # Get the next available data for this user
                 self.test_data = DataLoader.get_data()
-                Logger.log_message(f"User got data: {self.test_data}")
-                
-                # Execute operations with this data
                 operations = JfrogOperations(self)
                 operations.test_data = self.test_data
                 operations.run()
-                
-                # Clear the test data to force getting new data in next iteration
                 delattr(self, 'test_data')
-                
-                # Add a small delay between data sets
                 time.sleep(2)
-                
             except IndexError:
-                Logger.log_message("No more test data available. Stopping user.")
                 self.environment.runner.quit()
                 break
-            except Exception as e:
-                Logger.log_message(f"Error during execution: {str(e)}")
-                continue  # Continue with next data set even if current one fails
+            except Exception:
+                continue

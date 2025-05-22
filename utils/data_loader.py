@@ -1,24 +1,28 @@
-import os
 import csv
-import threading
+import os
+from utils.log_helper import Logger
+
 
 class DataLoader:
-
-    data_list = []
-    csv_file_path = os.getcwd() + '/data/test_data.csv'
-    _lock = threading.Lock()  # Add thread lock for thread safety
+    data = []
+    current_index = 0
 
     @staticmethod
     def load_data():
-        DataLoader.data_list = []  # Clear existing data
-        reader = csv.DictReader(open(DataLoader.csv_file_path))
-        for row in reader:
-            DataLoader.data_list.append(row)
+        try:
+            data_path = os.path.join(os.getcwd(), 'data', 'test_data.csv')
+            with open(data_path, 'r') as f:
+                reader = csv.DictReader(f)
+                DataLoader.data = list(reader)
+            DataLoader.current_index = 0
+        except Exception as e:
+            Logger.log_message(f"Error loading test data: {str(e)}")
 
     @staticmethod
     def get_data():
-        with DataLoader._lock:  # Thread-safe access to data
-            if len(DataLoader.data_list) < 1:
-                raise IndexError("No more test data available")
-            data_obj = DataLoader.data_list.pop(0)  # Get first item
-            return data_obj.copy()  # Return a copy to prevent data sharing between users
+        if DataLoader.current_index >= len(DataLoader.data):
+            raise IndexError("No more test data available")
+        
+        data = DataLoader.data[DataLoader.current_index]
+        DataLoader.current_index += 1
+        return data
